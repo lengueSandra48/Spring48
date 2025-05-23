@@ -1,0 +1,18 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/userhandler_db
+    username: postgres
+    password: sandra
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+application:
+  security:
+    jwt:
+      secret-key: C3FA3DC88493379ABFCC2779594D1MYSECRETKEY1233ADMIN
+      expiration: 900000
+
