@@ -1,4 +1,4 @@
-package com.lenguecode.booknetworkapi.security;
+package com.lenguecode.userhandler.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -40,7 +40,9 @@ public class JwtService {
                 .parseSignedClaims(token)  // ✅ Use `parseSignedClaims()` instead of `parseClaimsJws()`
                 .getPayload();  // ✅ Extract claims correctly
     }
-
+    public long getExpirationTime(){
+        return jwtExpiration;
+    }
 
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
@@ -50,7 +52,10 @@ public class JwtService {
         return buildToken(claims, userDetails, jwtExpiration);
     }
 
-    private String buildToken(Map<String, Object> claims, UserDetails userDetails, long jwtExpiration) {
+    private String buildToken(
+            Map<String, Object> claims,
+            UserDetails userDetails,
+            long jwtExpiration) {
         String authorities = userDetails.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)

@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/todo_db
-    username: username
-    password: password
+    username: postgres
+    password: sandra
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
