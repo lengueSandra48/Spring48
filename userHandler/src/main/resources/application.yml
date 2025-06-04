@@ -15,5 +15,17 @@ application:
   security:
     jwt:
       secret-key: C3FA3DC88493379ABFCC2779594D1MYSECRETKEY1233ADMIN
-      expiration: 900000
+      expiration: 900000 #15 min
+
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    display-request-duration: true
 

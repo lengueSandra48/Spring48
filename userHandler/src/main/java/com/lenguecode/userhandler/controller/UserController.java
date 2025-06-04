@@ -1,18 +1,37 @@
 package com.lenguecode.userhandler.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.lenguecode.userhandler.dtos.UpdateUserDto;
+import com.lenguecode.userhandler.entities.User;
+import com.lenguecode.userhandler.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("hello")
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth") // Add this at class level
 public class UserController {
-    @GetMapping("user")
-    public String helloUser(){
-        return "hello user";
+    private final UserService service;
+
+    @GetMapping("/all")
+    public ResponseEntity<List<User>> findAllUsers(){
+        return ResponseEntity.ok(service.getUserList());
     }
-    @GetMapping("admin")
-    public String helloAdmin(){
-        return "hello admin";
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(
+            @PathVariable Long id,
+            @RequestBody UpdateUserDto updateUserDto) {
+        User updatedUser = service.updateUser(id, updateUserDto);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        service.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }

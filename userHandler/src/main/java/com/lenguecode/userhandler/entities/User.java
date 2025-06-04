@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private String username;
+    private String fullName;
     @Column(unique = true, nullable = false)
     private String email;
 
@@ -68,6 +68,11 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
+    public String getFullName(String fullName){
+        return fullName;
+    }
+
 
 
 }

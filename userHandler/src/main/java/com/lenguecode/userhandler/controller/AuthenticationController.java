@@ -1,8 +1,8 @@
 package com.lenguecode.userhandler.controller;
 
-import com.lenguecode.userhandler.controller.dtos.LoginResponse;
-import com.lenguecode.userhandler.controller.dtos.LoginUserDto;
-import com.lenguecode.userhandler.controller.dtos.RegisterUserDto;
+import com.lenguecode.userhandler.dtos.LoginResponse;
+import com.lenguecode.userhandler.dtos.LoginUserDto;
+import com.lenguecode.userhandler.dtos.RegisterUserDto;
 import com.lenguecode.userhandler.entities.User;
 import com.lenguecode.userhandler.service.AuthenticationService;
 import com.lenguecode.userhandler.service.JwtService;

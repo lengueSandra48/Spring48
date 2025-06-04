@@ -1,4 +1,4 @@
-package com.lenguecode.userhandler.controller.dtos;
+package com.lenguecode.userhandler.dtos;
 
 import lombok.Data;
 
