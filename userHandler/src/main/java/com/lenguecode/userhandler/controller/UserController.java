@@ -1,37 +1,39 @@
 package com.lenguecode.userhandler.controller;
 
-import com.lenguecode.userhandler.dtos.UpdateUserDto;
 import com.lenguecode.userhandler.entities.User;
 import com.lenguecode.userhandler.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
+@SecurityRequirement(name = "bearerAuth")
+@RequestMapping("/users")
 @RestController
-@RequestMapping("/api/users")
-@RequiredArgsConstructor
-@SecurityRequirement(name = "bearerAuth") // Add this at class level
 public class UserController {
-    private final UserService service;
+    private final UserService userService;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<User>> findAllUsers(){
-        return ResponseEntity.ok(service.getUserList());
-    }
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(
-            @PathVariable Long id,
-            @RequestBody UpdateUserDto updateUserDto) {
-        User updatedUser = service.updateUser(id, updateUserDto);
-        return ResponseEntity.ok(updatedUser);
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        service.deleteUser(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/me")
+    public ResponseEntity<User> authenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User currentUser = (User) authentication.getPrincipal();
+
+        return ResponseEntity.ok(currentUser);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<User>> allUsers() {
+        List <User> users = userService.allUsers();
+
+        return ResponseEntity.ok(users);
     }
 }

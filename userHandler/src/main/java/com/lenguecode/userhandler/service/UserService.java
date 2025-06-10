@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,10 +41,6 @@ public class UserService {
             user.setRoles(roles);
         }
 
-        if (updateUserDto.getIsActive() != null) {
-            user.setActive(updateUserDto.getIsActive());
-        }
-
         return userRepository.save(user);
     }
 
@@ -54,7 +51,11 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public List<User> getUserList() {
-        return userRepository.findAll();
+    public List<User> allUsers() {
+        List<User> users = new ArrayList<>();
+
+        userRepository.findAll().forEach(users::add);
+
+        return users;
     }
 }

@@ -42,7 +42,6 @@ public class AuthenticationService {
                 .fullName(input.getFullName())
                 .email(input.getEmail())
                 .password(passwordEncoder.encode(input.getPassword())) //encode the user password
-                .isActive(false) //by default the account is not active
                 .roles(roles)
                 .build();
         return userRepository.save(user);
